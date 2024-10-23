@@ -1,5 +1,7 @@
-import '../screen/home_screen.dart';
+import 'package:biblioteca/utils/graddient_screen.dart';
+
+import '../screen/login_screen.dart';
 
 final routes = {
-  '/': (context) => const HomeScreen(),
+  '/': (context) => const GradientScaffold(child: LoginScreen()),
 };
