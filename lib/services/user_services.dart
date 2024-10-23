@@ -2,36 +2,33 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserServices {
-  static const String url = 'http://localhost:8080/';
+  static const String url = 'http://192.168.1.7:8080/';
 
-  static Future<dynamic> getUsers() async {
+  static Future<dynamic> loginUser(String email, String password) async {
     try {
-      final response = await http.get(
-        Uri.parse('${url}usuario'),
-      );
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
+      Map<String, dynamic> user = {
+        'usuario': email,
+        'contrasenia': password,
+      };
+      print(user);
 
-  static Future<void> loginUser(String email, String password) async {
-    try {
       final response = await http.post(
-        Uri.parse('${url}usuario/login'),
+        Uri.parse('${url}auth/login'),
         headers: {
           'Content-Type': 'application/json',
         },
-        body: {
-          'email': email,
-          'password': password,
-        },
+        body: json.encode(user),
       );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print(response.body);
+        return json.decode(response.body);
+      } else {
+        print(response.body);
+        return response.statusCode;
+      }
     } catch (e) {
+      print(e);
       return;
     }
   }

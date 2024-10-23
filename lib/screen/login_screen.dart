@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../services/user_services.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -13,6 +15,24 @@ class _LoginScreenState extends State<LoginScreen> {
   final _keyForm = GlobalKey<FormState>();
   bool isObscure = true;
   String? errorTextForm;
+
+  void _login() async {
+    try {
+      final response = await UserServices.loginUser(
+        emailController.text,
+        passwordController.text,
+      );
+      print(response);
+
+      if (response != null) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        print(response);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       if (_keyForm.currentState!.validate()) {
                         _keyForm.currentState!.save();
-                        print('Email: ${emailController.text}');
-                        print('Password: ${passwordController.text}');
+                        _login();
                       }
                     },
                     child: const Text('INICIAR SESIÓN'),
