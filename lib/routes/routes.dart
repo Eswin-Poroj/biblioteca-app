@@ -1,3 +1,4 @@
+import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/utils/graddient_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +9,12 @@ final routes = {
     path: '/',
     builder: (context, state) => const GradientScaffold(
       child: LoginScreen(),
+    ),
+  ),
+  GoRoute(
+    path: '/registrer',
+    builder: (context, state) => const GradientScaffold(
+      child: RegistrerScreen(),
     ),
   ),
 };

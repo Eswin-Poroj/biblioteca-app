@@ -4,13 +4,12 @@ import 'dart:convert';
 class UserServices {
   static const String url = 'http://192.168.1.7:8080/';
 
-  static Future<dynamic> loginUser(String email, String password) async {
+  Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
       Map<String, dynamic> user = {
         'usuario': email,
         'contrasenia': password,
       };
-      print(user);
 
       final response = await http.post(
         Uri.parse('${url}auth/login'),
@@ -19,21 +18,20 @@ class UserServices {
         },
         body: json.encode(user),
       );
-      print(response.statusCode);
+
       if (response.statusCode == 200) {
-        print(response.body);
         return json.decode(response.body);
       } else {
-        print(response.body);
-        return response.statusCode;
+        return json.decode(response.body);
       }
     } catch (e) {
       print(e);
-      return;
+      return {};
     }
   }
 
-  static Future<dynamic> registrerUser(String email, String password) async {
+  Future<Map<String, dynamic>> registrerUser(
+      String email, String password) async {
     try {
       Map<String, dynamic> user = {
         'usuario': email,
@@ -43,7 +41,7 @@ class UserServices {
 
       final response = await http.post(
         Uri.parse(
-          '${url}auth/registrer',
+          '${url}usuario',
         ),
         headers: {
           'Content-Type': 'application/json',
@@ -56,11 +54,11 @@ class UserServices {
         return json.decode(response.body);
       } else {
         print(response.body);
-        return response.statusCode;
+        return json.decode(response.body);
       }
     } catch (e) {
       print(e);
-      return;
+      return {};
     }
   }
 }

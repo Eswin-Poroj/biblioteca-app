@@ -1,39 +1,39 @@
-import 'package:biblioteca/models/user_provider.dart';
 import 'package:biblioteca/utils/scaffold_menseger.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../../../models/user_provider.dart';
+
+class RegistrerScreen extends StatefulWidget {
+  const RegistrerScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrerScreen> createState() => _RegistrerScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrerScreenState extends State<RegistrerScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   final _keyForm = GlobalKey<FormState>();
   bool isObscure = true;
+  bool isObscure2 = true;
   String? errorTextForm;
 
-  Future<void> _login() async {
-    try {
-      final userServices = Provider.of<UserProvider>(context, listen: false);
-      final response = await userServices.login(
-        emailController.text,
-        passwordController.text,
-      );
-      if (response['success'] == false) {
-        mensaje(context, '${response['message']}');
-      } else {
-        print(response);
-        mensaje(context, 'Bienvenido, Acceso Correcto');
-        //context.go('/home');
-      }
-    } catch (e) {
-      print(e);
+  void registrerUser() {
+    final email = emailController.text;
+    final password = passwordController.text;
+    final confirmPassword = confirmPasswordController.text;
+
+    if (password == confirmPassword) {
+      final response = context
+          .read<UserProvider>()
+          .registrarUsuarioProvider(email, password);
+      mensaje(context, '¡Usuario Registrado Correctamente!');
+      print(response);
+    } else {
+      mensaje(context, '¡Las Contraseñas No Coinciden!');
     }
   }
 
@@ -45,11 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(20),
-          child: Form(
+          child: SingleChildScrollView(
+            child: Form(
               key: _keyForm,
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  const Spacer(flex: 1),
+                  const SizedBox(height: 30),
                   Image.asset(
                     'assets/icons/avatar.png',
                     width: 125,
@@ -58,14 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white,
                   ),
                   const Text(
-                    'INICIA SESIÓN',
+                    'REGISTRATE',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  const Spacer(flex: 1),
+                  const SizedBox(height: 50),
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
@@ -84,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  const Spacer(flex: 1),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: passwordController,
                     decoration: InputDecoration(
@@ -115,31 +117,62 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: isObscure,
                     keyboardType: TextInputType.visiblePassword,
                   ),
-                  const Spacer(flex: 1),
+                  const SizedBox(height: 30),
+                  TextFormField(
+                    controller: confirmPasswordController,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Colors.white,
+                      ),
+                      labelText: 'Confirmar Contraseña',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isObscure2 = !isObscure2;
+                          });
+                        },
+                        icon: Icon(
+                          isObscure2 ? Icons.visibility_off : Icons.visibility,
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorText: errorTextForm,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Contraseña Requerida';
+                      }
+                      return null;
+                    },
+                    obscureText: isObscure2,
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                  const SizedBox(height: 50),
                   ElevatedButton(
                     onPressed: () {
                       if (_keyForm.currentState!.validate()) {
                         _keyForm.currentState!.save();
-                        _login();
+                        registrerUser();
                       }
                     },
-                    child: const Text('INICIAR SESIÓN'),
+                    child: const Text('REGISTRARSE'),
                   ),
-                  const Spacer(flex: 2),
+                  const SizedBox(height: 120),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        '¿No tienes cuenta?',
+                        '¿Ya Tienes Una Cuenta?',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       TextButton(
-                        onPressed: () => context.go('/registrer'),
+                        onPressed: () => context.go('/'),
                         child: const Text(
-                          'Registrate',
+                          'Inicia Sesión',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -149,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ],
-              )),
+              ),
+            ),
+          ),
         ),
       ),
     );
