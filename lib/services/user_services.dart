@@ -32,4 +32,35 @@ class UserServices {
       return;
     }
   }
+
+  static Future<dynamic> registrerUser(String email, String password) async {
+    try {
+      Map<String, dynamic> user = {
+        'usuario': email,
+        'contrasenia': password,
+        'estado': true,
+      };
+
+      final response = await http.post(
+        Uri.parse(
+          '${url}auth/registrer',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(user),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return json.decode(response.body);
+      } else {
+        print(response.body);
+        return response.statusCode;
+      }
+    } catch (e) {
+      print(e);
+      return;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../services/user_services.dart';
+import '../../services/user_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,9 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   const Spacer(flex: 1),
-                  const Icon(
-                    Icons.person_outlined,
-                    size: 100,
+                  Image.asset(
+                    'assets/icons/avatar.png',
+                    width: 125,
+                    height: 125,
+                    fit: BoxFit.cover,
                     color: Colors.white,
                   ),
                   const Text(
