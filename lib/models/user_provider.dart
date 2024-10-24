@@ -4,19 +4,19 @@ import 'package:flutter/foundation.dart';
 class User {
   final String email;
   final String password;
-  final String token;
+  final int id;
 
   User({
     required this.email,
     required this.password,
-    required this.token,
+    required this.id,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       email: json['email'],
       password: json['password'],
-      token: json['token'],
+      id: json['id'],
     );
   }
 
@@ -24,19 +24,19 @@ class User {
     return {
       'email': email,
       'password': password,
-      'token': token,
+      'id': id,
     };
   }
 
   User copyWith({
     String? email,
     String? password,
-    String? token,
+    int? id,
   }) {
     return User(
       email: email ?? this.email,
       password: password ?? this.password,
-      token: token ?? this.token,
+      id: id ?? this.id,
     );
   }
 }
@@ -61,6 +61,18 @@ class UserProvider extends ChangeNotifier {
         email,
         password,
       );
+      print(response);
+      return response;
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUserProvider(
+      Map<String, dynamic> user) async {
+    try {
+      final response = await UserServices().updateUser(user);
       print(response);
       return response;
     } catch (e) {

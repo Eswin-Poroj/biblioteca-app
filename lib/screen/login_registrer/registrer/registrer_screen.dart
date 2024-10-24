@@ -21,16 +21,27 @@ class _RegistrerScreenState extends State<RegistrerScreen> {
   bool isObscure2 = true;
   String? errorTextForm;
 
-  void registrerUser() {
+  Future<void> registrerUser() async {
     final email = emailController.text;
     final password = passwordController.text;
     final confirmPassword = confirmPasswordController.text;
 
     if (password == confirmPassword) {
-      final response = context
+      final response = await context
           .read<UserProvider>()
           .registrarUsuarioProvider(email, password);
+
+      dynamic idUser = response['id'];
+      print(idUser);
+
+      final User user = User(
+        email: email,
+        password: password,
+        id: idUser,
+      );
+      print(user);
       mensaje(context, '¡Usuario Registrado Correctamente!');
+      context.go('/update-user', extra: user);
       print(response);
     } else {
       mensaje(context, '¡Las Contraseñas No Coinciden!');

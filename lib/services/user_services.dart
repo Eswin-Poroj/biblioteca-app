@@ -50,10 +50,31 @@ class UserServices {
       );
 
       if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        return json.decode(response.body);
+      }
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUser(Map<String, dynamic> user) async {
+    try {
+      final response = await http.put(
+        Uri.parse('${url}perfil'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(user),
+      );
+
+      if (response.statusCode == 200) {
+        /// Guardar el token en el dispositivo
         print(response.body);
         return json.decode(response.body);
       } else {
-        print(response.body);
         return json.decode(response.body);
       }
     } catch (e) {
