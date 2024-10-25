@@ -1,6 +1,7 @@
 import 'package:biblioteca/screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/utils/graddient_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/book.dart';
@@ -12,28 +13,18 @@ import '../screen/login_registrer/registrer/update_user.dart';
 final routes = {
   GoRoute(
     path: '/',
-    builder: (context, state) => const GradientScaffold(
-      child: LoginScreen(),
-    ),
-    routes: [
-      GoRoute(
-        path: '/home-screen',
-        builder: (context, state) => const GradientScaffold(
-          child: HomeScreen(),
-        ),
-        routes: [
-          GoRoute(
-            path: '/book-details',
-            builder: (context, state) {
-              final Book book = state.extra as Book;
-              return GradientScaffold(
-                child: BookDetailsScreen(book: book),
-              );
-            },
-          ),
-        ],
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const GradientScaffold(
+        child: LoginScreen(),
       ),
-    ],
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    ),
   ),
   GoRoute(
     path: '/registrer',
@@ -56,6 +47,14 @@ final routes = {
           child: HomeScreen(),
         ),
       ),
+    ],
+  ),
+  GoRoute(
+    path: '/home-screen',
+    builder: (context, state) => const GradientScaffold(
+      child: HomeScreen(),
+    ),
+    routes: [
       GoRoute(
         path: '/book-details',
         builder: (context, state) {

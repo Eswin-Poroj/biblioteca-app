@@ -19,7 +19,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     Uint8List portada = base64Decode(widget.book.portada);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalles del libro'),
+        title: Text(widget.book.nombre),
       ),
       body: Container(
         width: double.infinity,

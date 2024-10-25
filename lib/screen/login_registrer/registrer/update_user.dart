@@ -37,7 +37,7 @@ class _UpdateUserState extends State<UpdateUser> {
       'numeroContacto': telefono,
       'sexo': sexo,
       'codigo_interno': null,
-      'rol': 1,
+      'rol': 3, // 3 es el rol de Estudiante
       'usuario': widget.user.id,
     };
     print(user);
