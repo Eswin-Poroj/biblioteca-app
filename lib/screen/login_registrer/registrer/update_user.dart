@@ -34,7 +34,7 @@ class _UpdateUserState extends State<UpdateUser> {
       'nombres': nombres,
       'apellidos': apellidos,
       'direccion': direccion,
-      'telefono': telefono,
+      'numeroContacto': telefono,
       'sexo': sexo,
       'codigo_interno': null,
       'rol': 1,
@@ -58,11 +58,11 @@ class _UpdateUserState extends State<UpdateUser> {
           await context.read<UserProvider>().updateUserProvider(user);
 
       print(response);
-
       if (response['perfil']['id'] != null) {
         mensaje(context, '¡Datos Actualizados Correctamente!');
+        context.go('/home-screen');
       } else {
-        mensaje(context, '¡Error al Actualizar los Datos!');
+        mensaje(context, '¡Error al Actualizar Datos!');
       }
     }
   }

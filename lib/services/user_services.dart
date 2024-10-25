@@ -1,8 +1,11 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserServices {
   static const String url = 'http://192.168.1.7:8080/';
+
+  ///static const String url = 'http://localhost:8080/';
 
   Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
@@ -20,6 +23,12 @@ class UserServices {
       );
 
       if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        String accessToken = decodedResponse['token'];
+
+        const storage = FlutterSecureStorage();
+        await storage.write(key: 'token', value: accessToken);
+
         return json.decode(response.body);
       } else {
         return json.decode(response.body);
@@ -52,6 +61,7 @@ class UserServices {
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
+        print(response.statusCode);
         return json.decode(response.body);
       }
     } catch (e) {
@@ -62,14 +72,20 @@ class UserServices {
 
   Future<Map<String, dynamic>> updateUser(Map<String, dynamic> user) async {
     try {
-      final response = await http.put(
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+      print(token);
+
+      final response = await http.post(
         Uri.parse('${url}perfil'),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
         },
         body: json.encode(user),
       );
 
+      print(response.statusCode);
       if (response.statusCode == 200) {
         /// Guardar el token en el dispositivo
         print(response.body);

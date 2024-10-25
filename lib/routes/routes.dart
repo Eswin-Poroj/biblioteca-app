@@ -3,7 +3,9 @@ import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dar
 import 'package:biblioteca/utils/graddient_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import '../models/book.dart';
 import '../models/user_provider.dart';
+import '../screen/books/book_details_screen.dart';
 import '../screen/login_registrer/login_screen.dart';
 import '../screen/login_registrer/registrer/update_user.dart';
 
@@ -13,6 +15,25 @@ final routes = {
     builder: (context, state) => const GradientScaffold(
       child: LoginScreen(),
     ),
+    routes: [
+      GoRoute(
+        path: '/home-screen',
+        builder: (context, state) => const GradientScaffold(
+          child: HomeScreen(),
+        ),
+        routes: [
+          GoRoute(
+            path: '/book-details',
+            builder: (context, state) {
+              final Book book = state.extra as Book;
+              return GradientScaffold(
+                child: BookDetailsScreen(book: book),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
   ),
   GoRoute(
     path: '/registrer',
@@ -28,12 +49,22 @@ final routes = {
         child: UpdateUser(user: user),
       );
     },
-  ),
-  GoRoute(
-    path: '/home',
-    redirect: (context, state) => '/',
-    builder: (context, state) => const GradientScaffold(
-      child: HomeScreen(),
-    ),
+    routes: [
+      GoRoute(
+        path: '/home-screen',
+        builder: (context, state) => const GradientScaffold(
+          child: HomeScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/book-details',
+        builder: (context, state) {
+          final Book book = state.extra as Book;
+          return GradientScaffold(
+            child: BookDetailsScreen(book: book),
+          );
+        },
+      ),
+    ],
   ),
 };

@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         print(response);
         mensaje(context, 'Bienvenido, Acceso Correcto');
-        //context.go('/home');
+        context.go('/home-screen');
       }
     } catch (e) {
       print(e);
