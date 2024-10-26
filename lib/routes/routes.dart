@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../models/book.dart';
 import '../models/user_provider.dart';
 import '../screen/books/book_details_screen.dart';
+import '../screen/books/reserver_book_screen.dart';
 import '../screen/login_registrer/login_screen.dart';
 import '../screen/login_registrer/registrer/update_user.dart';
 
@@ -63,6 +64,19 @@ final routes = {
             child: BookDetailsScreen(book: book),
           );
         },
+        routes: [
+          GoRoute(
+            path: '/reserver-book',
+            builder: (context, state) {
+              final Book book = state.extra as Book;
+              return GradientScaffold(
+                child: ReserverBookScreen(
+                  book: book,
+                ),
+              );
+            },
+          ),
+        ],
       ),
     ],
   ),

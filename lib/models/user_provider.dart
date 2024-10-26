@@ -61,7 +61,7 @@ class UserProvider extends ChangeNotifier {
         email,
         password,
       );
-      print(response);
+
       return response;
     } catch (e) {
       print(e);
@@ -73,11 +73,30 @@ class UserProvider extends ChangeNotifier {
       Map<String, dynamic> user) async {
     try {
       final response = await UserServices().updateUser(user);
-      print(response);
+
       return response;
     } catch (e) {
       print(e);
       return {};
+    }
+  }
+
+  Future<dynamic> getDataUser() async {
+    try {
+      final response = await UserServices().obtenerDatosUsuario();
+
+      return response;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await UserServices().logout();
+    } catch (e) {
+      print(e);
     }
   }
 }

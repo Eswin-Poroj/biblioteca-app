@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../models/book.dart';
 
@@ -38,7 +39,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const Spacer(flex: 1),
             Text(
               widget.book.nombre,
               style: const TextStyle(
@@ -47,7 +48,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 10),
+            const Spacer(flex: 1),
             Row(
               children: [
                 const Text(
@@ -127,6 +128,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 ),
               ],
             ),
+            const Spacer(flex: 2),
+            ElevatedButton(
+              onPressed: () {
+                context.go(
+                  '/home-screen/book-details/reserver-book',
+                  extra: widget.book,
+                );
+              },
+              child: const Text('Reservar'),
+            )
           ],
         ),
       ),

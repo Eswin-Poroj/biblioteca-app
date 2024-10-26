@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../models/book.dart';
+import '../models/user_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,8 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              //Provider.of<UserProvider>(context, listen: false).logout();
-              //context.go('/');
+              alerta(context);
             },
             icon: const Icon(Icons.logout),
           ),
@@ -130,6 +130,33 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
       ),
+    );
+  }
+
+  void alerta(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Alerta!'),
+          content: const Text('¿Estas Seguro de Cerrar Sesión?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Provider.of<UserProvider>(context, listen: false).logout();
+                context.go('/');
+              },
+              child: const Text('Aceptar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

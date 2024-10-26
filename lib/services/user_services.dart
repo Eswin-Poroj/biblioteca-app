@@ -88,7 +88,7 @@ class UserServices {
       print(response.statusCode);
       if (response.statusCode == 200) {
         /// Guardar el token en el dispositivo
-        print(response.body);
+
         return json.decode(response.body);
       } else {
         return json.decode(response.body);
@@ -96,6 +96,37 @@ class UserServices {
     } catch (e) {
       print(e);
       return {};
+    }
+  }
+
+  Future<dynamic> obtenerDatosUsuario() async {
+    try {
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+
+      final response = await http.get(
+        Uri.parse('${url}perfil/auth'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        return json.decode(response.body);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      const storage = FlutterSecureStorage();
+      await storage.delete(key: 'token');
+    } catch (e) {
+      print(e);
     }
   }
 }
