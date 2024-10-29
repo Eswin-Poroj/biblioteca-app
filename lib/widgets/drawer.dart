@@ -46,6 +46,14 @@ Drawer drawerApp() {
         ),
         ListTile(
           leading: const Icon(
+            Icons.group,
+            color: Colors.blue,
+          ),
+          title: const Text('Visualización De Grupos'),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(
             Icons.person,
             color: Colors.blue,
           ),

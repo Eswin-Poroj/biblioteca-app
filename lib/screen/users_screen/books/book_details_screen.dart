@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../models/book.dart';
+import '../../../models/book.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   final Book book;

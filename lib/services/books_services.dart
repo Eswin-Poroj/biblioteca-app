@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:biblioteca/services/user_services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../models/book.dart';
 import 'package:http/http.dart' as http;
 
 class BooksServices {
-  static const String url = 'http://192.168.1.7:8080/';
+  final String urlApi = UserServices.url;
 
   Future<List<Book>> getBooks() async {
     try {
@@ -15,7 +16,7 @@ class BooksServices {
       List<Book> books = [];
 
       final response = await http.get(
-        Uri.parse('${url}libros'),
+        Uri.parse('${urlApi}libros'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -54,11 +55,31 @@ class BooksServices {
     }
   }
 
-  // Future<void> solicitarLibro() async {
-  //   try {
-  //     const storage = FlutterSecureStorage();
-  //     String? token = await storage.read(key: 'token');
+  Future<Map<String, dynamic>> solicitarLibro(
+      Map<String, dynamic> datosLibro) async {
+    try {
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
 
-  //   } catch (e) {}
-  // }
+      final response = await http.post(
+        Uri.parse('${urlApi}libroUsuarios'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(datosLibro),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return json.decode(response.body);
+      } else {
+        print(response.body);
+        return json.decode(response.body);
+      }
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
 }

@@ -106,4 +106,16 @@ class BookProvider extends ChangeNotifier {
       return [];
     }
   }
+
+  Future<Map<String, dynamic>> solicitarLibro(
+      Map<String, dynamic> datosLibro) async {
+    try {
+      final response = await BooksServices().solicitarLibro(datosLibro);
+      notifyListeners();
+      return response;
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
 }

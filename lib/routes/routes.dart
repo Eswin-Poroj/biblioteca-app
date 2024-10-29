@@ -1,4 +1,4 @@
-import 'package:biblioteca/screen/home_screen.dart';
+import 'package:biblioteca/screen/users_screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/utils/graddient_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 
 import '../models/book.dart';
 import '../models/user_provider.dart';
-import '../screen/books/book_details_screen.dart';
-import '../screen/books/reserver_book_screen.dart';
+import '../screen/users_screen/books/book_details_screen.dart';
+import '../screen/users_screen/books/reserver_book_screen.dart';
 import '../screen/login_registrer/login_screen.dart';
 import '../screen/login_registrer/registrer/update_user.dart';
 
