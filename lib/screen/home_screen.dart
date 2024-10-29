@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:biblioteca/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      drawer: drawerApp(),
       body: FutureBuilder<List<Book>>(
         //future: Provider.of<BookProvider>(context, listen: false).getBooks(),
         future: Provider.of<BookProvider>(context, listen: false)
