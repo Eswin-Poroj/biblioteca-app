@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:biblioteca/models/book.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/drawer.dart';
@@ -20,7 +21,7 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Libros Reservados'),
+        title: const Text('LIBROS RESERVADOS'),
       ),
       drawer: drawerApp(context),
       body: FutureBuilder<dynamic>(
@@ -38,7 +39,15 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
-                child: Text('No hay libros reservados'),
+                child: Text(
+                  'NO SE ENCONTRARON LIBROS RESERVADOS',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               );
             } else {
               final books = snapshot.data!;
@@ -53,6 +62,7 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
                             books[index]['ejemplarId']['librod']['portada'],
                           );
                           return Card(
+                            elevation: 5,
                             child: ListTile(
                               leading: Image.memory(
                                 bytes,
@@ -74,10 +84,28 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      const Text('Fecha de Devolucón: '),
+                                      const Text('Fecha de Devolución: '),
                                       Text(
                                         books[index]['fechaRecepcion']
                                             .toString(),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                          'Fecha de Máxima De Devolución: '),
+                                      Text(
+                                        DateFormat('yyyy-MM-dd').format(
+                                          DateTime.parse(books[index]
+                                                      ['fechaEntrega']
+                                                  .toString())
+                                              .add(
+                                            const Duration(days: 7),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

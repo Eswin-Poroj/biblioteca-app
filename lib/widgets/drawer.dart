@@ -65,7 +65,9 @@ Drawer drawerApp(BuildContext context) {
             color: Colors.blue,
           ),
           title: const Text('Perfil'),
-          onTap: () {},
+          onTap: () {
+            context.go('/profile-screen');
+          },
         ),
       ],
     ),

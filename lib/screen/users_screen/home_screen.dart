@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
-        title: const Text('Biblioteca'),
+        title: const Text('BIBLIOTECA UMG'),
         actions: [
           IconButton(
             onPressed: () {

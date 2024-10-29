@@ -1,5 +1,6 @@
 import 'package:biblioteca/screen/users_screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
+import 'package:biblioteca/screen/users_screen/profile_screen.dart';
 import 'package:biblioteca/utils/graddient_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -172,6 +173,23 @@ final routes = {
         key: state.pageKey,
         child: const GradientScaffold(
           child: ViewGroupsScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/profile-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ProfileScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

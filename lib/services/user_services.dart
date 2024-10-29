@@ -129,4 +129,35 @@ class UserServices {
       print(e);
     }
   }
+
+  Future getGroupsStudens() async {
+    try {
+      final group = [];
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+
+      final dataUser = await UserServices().obtenerDatosUsuario();
+      final idUsuario = dataUser['id'];
+
+      final response = await http.get(
+        Uri.parse('${url}grupos/estudiante/$idUsuario'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        for (var grupo in decodedResponse) {
+          group.add(grupo);
+        }
+        return group;
+      } else {
+        return response.body;
+      }
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
 }
