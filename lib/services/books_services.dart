@@ -82,4 +82,38 @@ class BooksServices {
       return {};
     }
   }
+
+  Future obtenerListaLibrosReservados() async {
+    try {
+      List libros = [];
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+
+      final dataUser = await UserServices().obtenerDatosUsuario();
+      final idUsuario = dataUser['id'];
+      print(idUsuario);
+
+      final response = await http.get(
+        Uri.parse('${urlApi}libroUsuarios/perfil/$idUsuario'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        for (var item in decodedResponse) {
+          libros.add(item);
+        }
+        print(libros);
+        return libros;
+      } else {
+        print(response.body);
+        return json.decode(response.body);
+      }
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-Drawer drawerApp() {
+Drawer drawerApp(BuildContext context) {
   return Drawer(
     elevation: 16.0,
     surfaceTintColor: Colors.blue,
@@ -26,7 +27,9 @@ Drawer drawerApp() {
             color: Colors.blue,
           ),
           title: const Text('Inicio'),
-          onTap: () {},
+          onTap: () {
+            context.go('/home-screen');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -42,7 +45,9 @@ Drawer drawerApp() {
             color: Colors.blue,
           ),
           title: const Text('Pedidos'),
-          onTap: () {},
+          onTap: () {
+            context.go('/libros-reservados');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -50,7 +55,9 @@ Drawer drawerApp() {
             color: Colors.blue,
           ),
           title: const Text('Visualización De Grupos'),
-          onTap: () {},
+          onTap: () {
+            context.go('/view-groups');
+          },
         ),
         ListTile(
           leading: const Icon(

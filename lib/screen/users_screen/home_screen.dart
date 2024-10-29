@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: drawerApp(),
+      drawer: drawerApp(context),
       body: FutureBuilder<List<Book>>(
         //future: Provider.of<BookProvider>(context, listen: false).getBooks(),
         future: Provider.of<BookProvider>(context, listen: false)

@@ -99,7 +99,7 @@ class BookProvider extends ChangeNotifier {
   Future<List<Book>> searchBook(String query) async {
     try {
       final response = await BooksServices().searchBooks(query);
-      notifyListeners();
+
       return response;
     } catch (e) {
       print(e);
@@ -112,6 +112,17 @@ class BookProvider extends ChangeNotifier {
     try {
       final response = await BooksServices().solicitarLibro(datosLibro);
       notifyListeners();
+      return response;
+    } catch (e) {
+      print(e);
+      return {};
+    }
+  }
+
+  Future obtenerListaLibrosReservados() async {
+    try {
+      final response = await BooksServices().obtenerListaLibrosReservados();
+
       return response;
     } catch (e) {
       print(e);

@@ -259,7 +259,7 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
                 DateFormat('dd-MM-yyyy')
                     .format(
                       _selectedDate!.add(
-                        const Duration(days: 3),
+                        const Duration(days: 7),
                       ),
                     )
                     .toString(),
