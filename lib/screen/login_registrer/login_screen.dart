@@ -29,8 +29,30 @@ class _LoginScreenState extends State<LoginScreen> {
         mensaje(context, '${response['message']}');
       } else {
         print(response);
-        mensaje(context, 'Bienvenido, Acceso Correcto');
-        context.go('/home-screen');
+
+        final datosUser =
+            await Provider.of<UserProvider>(context, listen: false)
+                .getDataUser();
+
+        print(datosUser);
+
+        if (datosUser['rol']['id'] == 3) {
+          mensaje(context,
+              'Bienvenido ${datosUser['nombres']}, Acceso De Estudiante Correcto');
+          context.go('/home-screen');
+        } else if (datosUser['rol']['id'] == 2) {
+          mensaje(context,
+              'Bienvenido ${datosUser['nombres']}, Acceso De Profesor Correcto');
+          context.go('/admin-screen');
+        } else if (datosUser['rol']['id'] == 1) {
+          mensaje(context,
+              'Bienvenido ${datosUser['nombres']}, Acceso De Bibliotecario Correcto');
+          context.go('/admin-screen');
+        } else {
+          mensaje(
+              context, 'Bienvenido ${datosUser['nombres']}, Acceso Correcto');
+          context.go('/home-screen');
+        }
       }
     } catch (e) {
       print(e);

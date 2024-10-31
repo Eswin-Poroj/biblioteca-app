@@ -1,3 +1,7 @@
+import 'package:biblioteca/screen/librarian/add_book_screen.dart';
+import 'package:biblioteca/screen/librarian/details_book_screen_librarian.dart';
+import 'package:biblioteca/screen/librarian/home_admin_screen.dart';
+import 'package:biblioteca/screen/librarian/solicitudes_book_screen.dart';
 import 'package:biblioteca/screen/users_screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/screen/users_screen/profile_screen.dart';
@@ -15,6 +19,7 @@ import '../screen/users_screen/books/view_books_reserver_screen.dart';
 import '../screen/users_screen/view_groups_screen.dart';
 
 final routes = {
+  /// Login Screen
   GoRoute(
     path: '/',
     pageBuilder: (context, state) => CustomTransitionPage(
@@ -30,6 +35,8 @@ final routes = {
       },
     ),
   ),
+
+  /// Registrer Screen
   GoRoute(
     path: '/registrer',
     pageBuilder: (context, state) {
@@ -49,6 +56,8 @@ final routes = {
       child: RegistrerScreen(),
     ),
   ),
+
+  /// Update User Screen
   GoRoute(
     path: '/update-user',
     pageBuilder: (context, state) {
@@ -84,6 +93,8 @@ final routes = {
       ),
     ],
   ),
+
+  /// Home Screen
   GoRoute(
     path: '/home-screen',
     pageBuilder: (context, state) => CustomTransitionPage(
@@ -99,14 +110,9 @@ final routes = {
       },
     ),
     routes: [
+      /// Book Details Screen
       GoRoute(
         path: '/book-details',
-        builder: (context, state) {
-          final Book book = state.extra as Book;
-          return GradientScaffold(
-            child: BookDetailsScreen(book: book),
-          );
-        },
         pageBuilder: (context, state) {
           final Book book = state.extra as Book;
           return CustomTransitionPage(
@@ -121,6 +127,7 @@ final routes = {
           );
         },
         routes: [
+          /// Reserver Book Screen
           GoRoute(
             path: '/reserver-book',
             pageBuilder: (context, state) {
@@ -144,6 +151,8 @@ final routes = {
       ),
     ],
   ),
+
+  /// View Books Reserver Screen
   GoRoute(
     path: '/libros-reservados',
     pageBuilder: (context, state) => CustomTransitionPage(
@@ -166,6 +175,8 @@ final routes = {
       },
     ),
   ),
+
+  /// View Groups Screen
   GoRoute(
     path: '/view-groups',
     pageBuilder: (context, state) {
@@ -183,6 +194,8 @@ final routes = {
       );
     },
   ),
+
+  /// Profile Screen
   GoRoute(
     path: '/profile-screen',
     pageBuilder: (context, state) {
@@ -199,5 +212,77 @@ final routes = {
         },
       );
     },
+  ),
+
+  /// Admin Home Screen
+  GoRoute(
+      path: '/admin-screen',
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const GradientScaffold(
+            child: HomeAdminScreen(),
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        );
+      },
+      routes: [
+        GoRoute(
+          path: '/book-details-librarian',
+          pageBuilder: (context, state) {
+            final Book book = state.extra as Book;
+            return CustomTransitionPage(
+              key: state.pageKey,
+              child: GradientScaffold(
+                child: DetailsBookScreenLibrarian(book: book),
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
+              },
+            );
+          },
+        ),
+      ]),
+
+  /// Add Book Screen
+  GoRoute(
+    path: '/add-book-screen-librarian',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        child: const GradientScaffold(
+          child: AddBookScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/solicitudes-aprobar-libros-screen',
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const GradientScaffold(
+        child: SolicitudesBookScreen(),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    ),
   ),
 };

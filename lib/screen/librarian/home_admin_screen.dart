@@ -1,22 +1,21 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:biblioteca/utils/logout_alert.dart';
-import 'package:biblioteca/widgets/drawer.dart';
+import 'package:biblioteca/widgets/drawer_bibliotecario.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/book.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeAdminScreen extends StatefulWidget {
+  const HomeAdminScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeAdminScreen> createState() => _HomeAdminScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeAdminScreenState extends State<HomeAdminScreen> {
   TextEditingController searchController = TextEditingController();
   List<Book> booksSearch = [];
   bool isLoaded = false;
@@ -44,17 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BIBLIOTECA'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              LogoutAlert.alerta(context);
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
+        title: const Text('BIBLIOTECARIO'),
       ),
-      drawer: drawerApp(context),
+      drawer: drawerBibliotecario(context),
       body: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
@@ -102,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: () {
-                                  context.go('/home-screen/book-details',
+                                  context.go(
+                                      '/admin-screen/book-details-librarian',
                                       extra: book);
                                 },
                                 child: Card(

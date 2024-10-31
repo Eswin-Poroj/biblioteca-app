@@ -29,6 +29,8 @@ class BooksServices {
         for (var item in decodedResponse) {
           books.add(Book.fromJson(item));
         }
+        print('Estos son los libros');
+        print(books);
         return books;
       } else {
         return [];
