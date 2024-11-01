@@ -108,5 +108,28 @@ ThemeData themeApp() {
         ),
       ),
     ),
+    dialogTheme: DialogTheme(
+      surfaceTintColor: Colors.white,
+      barrierColor: Colors.black.withOpacity(0.5),
+      elevation: 16,
+      backgroundColor: Colors.white,
+      titleTextStyle: const TextStyle(
+        color: Colors.blue,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      contentTextStyle: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      insetPadding: const EdgeInsets.all(20.0),
+      actionsPadding: const EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 10.0,
+      ),
+    ),
   );
 }
