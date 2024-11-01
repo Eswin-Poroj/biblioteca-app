@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:biblioteca/models/book.dart';
+import 'package:biblioteca/services/librarian_services.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -103,7 +105,7 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
                                                       ['fechaEntrega']
                                                   .toString())
                                               .add(
-                                            const Duration(days: 7),
+                                            const Duration(days: 3),
                                           ),
                                         ),
                                       ),
@@ -118,9 +120,17 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
                                       ),
                                     ],
                                   ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.blue,
+                                    ),
+                                    onPressed: () async {
+                                      alerta(context, books[index]['id']);
+                                    },
+                                  ),
                                 ],
                               ),
-                              onTap: () {},
                             ),
                           );
                         },
@@ -133,6 +143,35 @@ class _ViewBooksReserverScreenState extends State<ViewBooksReserverScreen> {
           }
         },
       ),
+    );
+  }
+
+  void alerta(BuildContext context, book) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('¿Desea eliminar la reserva?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                LibrarianServices().aprobarSolicitudLibros(book, 2);
+                context.pop();
+                setState(() {
+                  GoRouter.of(context).go('/libros-reservados');
+                });
+              },
+              child: const Text('Aceptar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

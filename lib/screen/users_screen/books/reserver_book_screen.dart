@@ -102,6 +102,7 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
             Image.memory(
               portada,
               fit: BoxFit.cover,
+              height: 300,
             ),
             const Spacer(flex: 1),
             Table(
@@ -148,7 +149,7 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
                 )
               ],
             ),
-            const SizedBox(height: 20),
+            const Spacer(flex: 1),
             ElevatedButton(
               onPressed: () => _selectDate(context),
               style: ElevatedButton.styleFrom(
@@ -162,7 +163,7 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const Spacer(flex: 1),
             Text(
               _selectedDate == null
                   ? '¡No Hay Fecha De Entrega!'

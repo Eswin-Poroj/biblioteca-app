@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:biblioteca/widgets/drawer_bibliotecario.dart';
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -89,6 +90,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                           itemBuilder: (context, index) {
                             var book = booksSearch[index];
                             Uint8List bytes = base64Decode(book.portada);
+
                             return Padding(
                               padding: const EdgeInsets.all(10),
                               child: GestureDetector(
@@ -103,9 +105,12 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Image.memory(
-                                          bytes,
-                                          fit: BoxFit.cover,
+                                        CachedMemoryImage(
+                                          uniqueKey: 'app://image/${book.id}',
+                                          errorWidget: const Text('Error'),
+                                          bytes: bytes,
+                                          placeholder:
+                                              const CircularProgressIndicator(),
                                         ),
                                         Text(
                                           book.nombre,

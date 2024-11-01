@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:biblioteca/utils/logout_alert.dart';
 import 'package:biblioteca/widgets/drawer.dart';
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -111,9 +112,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Image.memory(
-                                          bytes,
-                                          fit: BoxFit.cover,
+                                        CachedMemoryImage(
+                                          uniqueKey: 'app://image/${book.id}',
+                                          errorWidget: const Text('Error'),
+                                          bytes: bytes,
+                                          placeholder:
+                                              const CircularProgressIndicator(),
                                         ),
                                         Text(
                                           book.nombre,

@@ -108,7 +108,9 @@ class BooksServices {
           libros.add(item);
         }
         print(libros);
-        return libros;
+        return libros.where((libro) {
+          return libro['estadoId']['descripcion'] != 'Inactivo';
+        }).toList();
       } else {
         print(response.body);
         return json.decode(response.body);

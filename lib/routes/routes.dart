@@ -1,7 +1,10 @@
 import 'package:biblioteca/screen/librarian/add_book_screen.dart';
 import 'package:biblioteca/screen/librarian/details_book_screen_librarian.dart';
 import 'package:biblioteca/screen/librarian/home_admin_screen.dart';
+import 'package:biblioteca/screen/librarian/libros_prestados_screen.dart';
 import 'package:biblioteca/screen/librarian/solicitudes_book_screen.dart';
+import 'package:biblioteca/screen/librarian/view_all_group_screen.dart';
+import 'package:biblioteca/screen/librarian/view_all_user_screen.dart';
 import 'package:biblioteca/screen/users_screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/screen/users_screen/profile_screen.dart';
@@ -284,5 +287,54 @@ final routes = {
         );
       },
     ),
+  ),
+  GoRoute(
+    path: '/libros-prestados-screen',
+    pageBuilder: (context, state) => CustomTransitionPage(
+      key: state.pageKey,
+      child: const GradientScaffold(
+        child: LibrosPrestadosScreen(),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    ),
+  ),
+  GoRoute(
+    path: '/view-all-user-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ViewAllUserScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/view-all-group-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ViewAllGroupScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
   ),
 };

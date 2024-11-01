@@ -110,4 +110,15 @@ class UserProvider extends ChangeNotifier {
       return 0;
     }
   }
+
+  Future getAllGroupsStuden() async {
+    try {
+      final response = await UserServices().getAllGroupsStudens();
+
+      return response;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
 }

@@ -48,7 +48,9 @@ Drawer drawerBibliotecario(BuildContext context) {
             color: Colors.blue,
           ),
           title: const Text('Ver Grupos'),
-          onTap: () {},
+          onTap: () {
+            context.go('/view-all-group-screen');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -56,7 +58,9 @@ Drawer drawerBibliotecario(BuildContext context) {
             color: Colors.blue,
           ),
           title: const Text('Ver Usuarios'),
-          onTap: () {},
+          onTap: () {
+            context.go('/view-all-user-screen');
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -74,15 +78,9 @@ Drawer drawerBibliotecario(BuildContext context) {
             color: Colors.blue,
           ),
           title: const Text('Ver Prestamos'),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(
-            Icons.book,
-            color: Colors.blue,
-          ),
-          title: const Text('Ver Devoluciones'),
-          onTap: () {},
+          onTap: () {
+            context.go('/libros-prestados-screen');
+          },
         ),
         ListTile(
           leading: const Icon(
