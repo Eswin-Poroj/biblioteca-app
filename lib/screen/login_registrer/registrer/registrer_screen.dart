@@ -32,17 +32,14 @@ class _RegistrerScreenState extends State<RegistrerScreen> {
           .registrarUsuarioProvider(email, password);
 
       dynamic idUser = response['id'];
-      print(idUser);
 
       final User user = User(
         email: email,
         password: password,
         id: idUser,
       );
-      print(user);
       mensaje(context, '¡Usuario Registrado Correctamente!');
       context.go('/update-user', extra: user);
-      print(response);
     } else {
       mensaje(context, '¡Las Contraseñas No Coinciden!');
     }

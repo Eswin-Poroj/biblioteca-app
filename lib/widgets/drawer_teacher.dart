@@ -2,7 +2,7 @@ import 'package:biblioteca/utils/logout_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Drawer drawerBibliotecario(BuildContext context) {
+Drawer drawerTeacher(BuildContext context) {
   return Drawer(
     elevation: 16.0,
     surfaceTintColor: Colors.blue,
@@ -27,19 +27,9 @@ Drawer drawerBibliotecario(BuildContext context) {
             Icons.book,
             color: Colors.blue,
           ),
-          title: const Text('Agregar Libro'),
-          onTap: () {
-            context.go('/add-book-screen-librarian');
-          },
-        ),
-        ListTile(
-          leading: const Icon(
-            Icons.book,
-            color: Colors.blue,
-          ),
           title: const Text('Ver Libros'),
           onTap: () {
-            context.go('/admin-screen');
+            context.go('/home-teacher-screen');
           },
         ),
         ListTile(
@@ -49,7 +39,7 @@ Drawer drawerBibliotecario(BuildContext context) {
           ),
           title: const Text('Ver Grupos'),
           onTap: () {
-            context.go('/view-all-group-screen');
+            context.go('/view-group-teacher-screen');
           },
         ),
         ListTile(
@@ -57,29 +47,9 @@ Drawer drawerBibliotecario(BuildContext context) {
             Icons.book,
             color: Colors.blue,
           ),
-          title: const Text('Ver Usuarios'),
+          title: const Text('Ver Estudiantes'),
           onTap: () {
-            context.go('/view-all-user-screen');
-          },
-        ),
-        ListTile(
-          leading: const Icon(
-            Icons.book,
-            color: Colors.blue,
-          ),
-          title: const Text('Ver Solicitudes'),
-          onTap: () {
-            context.go('/solicitudes-aprobar-libros-screen');
-          },
-        ),
-        ListTile(
-          leading: const Icon(
-            Icons.book,
-            color: Colors.blue,
-          ),
-          title: const Text('Ver Prestamos'),
-          onTap: () {
-            context.go('/libros-prestados-screen');
+            context.go('/view-students');
           },
         ),
         ListTile(
@@ -89,7 +59,7 @@ Drawer drawerBibliotecario(BuildContext context) {
           ),
           title: const Text('Ver Multas'),
           onTap: () {
-            context.go('/view-multas-screen');
+            context.go('/view-multas-teacher-screen');
           },
         ),
         ListTile(

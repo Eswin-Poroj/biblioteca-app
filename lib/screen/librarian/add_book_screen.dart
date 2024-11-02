@@ -79,7 +79,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
       noPaginas: int.parse(cantidadPaginasController.text),
       isbn: isbnController.text,
     );
-    print(datosLibro.toJson());
 
     final response = await LibrarianServices().addBook(datosLibro);
 

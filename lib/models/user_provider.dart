@@ -50,7 +50,7 @@ class UserProvider extends ChangeNotifier {
       );
       return response;
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 
@@ -64,7 +64,6 @@ class UserProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -76,7 +75,6 @@ class UserProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -87,7 +85,6 @@ class UserProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return 0;
     }
   }
@@ -96,7 +93,7 @@ class UserProvider extends ChangeNotifier {
     try {
       await UserServices().logout();
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 
@@ -106,7 +103,6 @@ class UserProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return 0;
     }
   }
@@ -117,7 +113,6 @@ class UserProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return 0;
     }
   }

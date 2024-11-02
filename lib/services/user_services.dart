@@ -34,7 +34,6 @@ class UserServices {
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -61,11 +60,9 @@ class UserServices {
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        print(response.statusCode);
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -74,7 +71,6 @@ class UserServices {
     try {
       const storage = FlutterSecureStorage();
       String? token = await storage.read(key: 'token');
-      print(token);
 
       final response = await http.post(
         Uri.parse('${url}perfil'),
@@ -85,7 +81,6 @@ class UserServices {
         body: json.encode(user),
       );
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
         /// Guardar el token en el dispositivo
 
@@ -94,7 +89,6 @@ class UserServices {
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -117,7 +111,7 @@ class UserServices {
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 
@@ -126,7 +120,7 @@ class UserServices {
       const storage = FlutterSecureStorage();
       await storage.delete(key: 'token');
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 
@@ -156,7 +150,6 @@ class UserServices {
         return response.body;
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -184,7 +177,6 @@ class UserServices {
         return response.body;
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -204,18 +196,44 @@ class UserServices {
         for (var user in decodedResponse) {
           users.add(user);
         }
-        print(users);
         return users;
       } else {
         var decodedResponse = jsonDecode(response.body);
         for (var user in decodedResponse) {
           users.add(user);
         }
-        print(users);
         return users;
       }
     } catch (e) {
-      print(e);
+      return [];
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getStudents() async {
+    try {
+      List<Map<String, dynamic>> users = [];
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+
+      final response =
+          await http.get(Uri.parse('${url}perfil/rol/3'), headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        for (var user in decodedResponse) {
+          users.add(user);
+        }
+        return users;
+      } else {
+        var decodedResponse = jsonDecode(response.body);
+        for (var user in decodedResponse) {
+          users.add(user);
+        }
+        return users;
+      }
+    } catch (e) {
       return [];
     }
   }

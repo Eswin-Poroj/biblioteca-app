@@ -5,6 +5,11 @@ import 'package:biblioteca/screen/librarian/libros_prestados_screen.dart';
 import 'package:biblioteca/screen/librarian/solicitudes_book_screen.dart';
 import 'package:biblioteca/screen/librarian/view_all_group_screen.dart';
 import 'package:biblioteca/screen/librarian/view_all_user_screen.dart';
+import 'package:biblioteca/screen/librarian/view_multas_screen.dart';
+import 'package:biblioteca/screen/teacher/home_teacher_screen.dart';
+import 'package:biblioteca/screen/teacher/view_group_teacher_screen.dart';
+import 'package:biblioteca/screen/teacher/view_multas_teacher_screen.dart';
+import 'package:biblioteca/screen/teacher/view_studens.dart';
 import 'package:biblioteca/screen/users_screen/home_screen.dart';
 import 'package:biblioteca/screen/login_registrer/registrer/registrer_screen.dart';
 import 'package:biblioteca/screen/users_screen/profile_screen.dart';
@@ -219,42 +224,43 @@ final routes = {
 
   /// Admin Home Screen
   GoRoute(
-      path: '/admin-screen',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          key: state.pageKey,
-          child: const GradientScaffold(
-            child: HomeAdminScreen(),
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-        );
-      },
-      routes: [
-        GoRoute(
-          path: '/book-details-librarian',
-          pageBuilder: (context, state) {
-            final Book book = state.extra as Book;
-            return CustomTransitionPage(
-              key: state.pageKey,
-              child: GradientScaffold(
-                child: DetailsBookScreenLibrarian(book: book),
-              ),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return ScaleTransition(
-                  scale: animation,
-                  child: child,
-                );
-              },
-            );
-          },
+    path: '/admin-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: HomeAdminScreen(),
         ),
-      ]),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+    routes: [
+      GoRoute(
+        path: '/book-details-librarian',
+        pageBuilder: (context, state) {
+          final Book book = state.extra as Book;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: GradientScaffold(
+              child: DetailsBookScreenLibrarian(book: book),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            },
+          );
+        },
+      ),
+    ],
+  ),
 
   /// Add Book Screen
   GoRoute(
@@ -327,6 +333,115 @@ final routes = {
         key: state.pageKey,
         child: const GradientScaffold(
           child: ViewAllGroupScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/view-multas-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        child: const GradientScaffold(
+          child: ViewMultasScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+
+  /// Routes for the teacher
+
+  GoRoute(
+    path: '/home-teacher-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: HomeTeacherScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+    routes: [
+      GoRoute(
+        path: '/book-details-librarian',
+        pageBuilder: (context, state) {
+          final Book book = state.extra as Book;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: GradientScaffold(
+              child: DetailsBookScreenLibrarian(book: book),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            },
+          );
+        },
+      ),
+    ],
+  ),
+
+  GoRoute(
+    path: '/view-students',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ViewStudens(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/view-multas-teacher-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ViewMultasTeacherScreen(),
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/view-group-teacher-screen',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const GradientScaffold(
+          child: ViewGroupTeacherScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

@@ -26,15 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
         passwordController.text,
       );
       if (response['success'] == false) {
-        mensaje(context, '${response['message']}');
+        mensaje(context, 'Correo o Contraseña Incorrecta');
       } else {
-        print(response);
-
         final datosUser =
             await Provider.of<UserProvider>(context, listen: false)
                 .getDataUser();
-
-        print(datosUser);
 
         if (datosUser['rol']['id'] == 3) {
           mensaje(context,
@@ -43,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (datosUser['rol']['id'] == 2) {
           mensaje(context,
               'Bienvenido ${datosUser['nombres']}, Acceso De Profesor Correcto');
-          context.go('/admin-screen');
+          context.go('/home-teacher-screen');
         } else if (datosUser['rol']['id'] == 1) {
           mensaje(context,
               'Bienvenido ${datosUser['nombres']}, Acceso De Bibliotecario Correcto');
@@ -55,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 
@@ -68,110 +64,111 @@ class _LoginScreenState extends State<LoginScreen> {
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.all(20),
           child: Form(
-              key: _keyForm,
-              child: Column(
-                children: [
-                  const Spacer(flex: 1),
-                  Image.asset(
-                    'assets/icons/avatar.png',
-                    width: 125,
-                    height: 125,
-                    fit: BoxFit.cover,
+            key: _keyForm,
+            child: Column(
+              children: [
+                const Spacer(flex: 1),
+                Image.asset(
+                  'assets/icons/avatar.png',
+                  width: 125,
+                  height: 125,
+                  fit: BoxFit.cover,
+                  color: Colors.white,
+                ),
+                const Text(
+                  'INICIA SESIÓN',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                  const Text(
-                    'INICIA SESIÓN',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                ),
+                const Spacer(flex: 1),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(
+                      Icons.person_2_sharp,
                       color: Colors.white,
                     ),
+                    labelText: 'Correo Electronico',
+                    errorText: errorTextForm,
                   ),
-                  const Spacer(flex: 1),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.person_2_sharp,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Correo Requerido';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const Spacer(flex: 1),
+                TextFormField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                    ),
+                    labelText: '* * * * * * * *',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isObscure = !isObscure;
+                        });
+                      },
+                      icon: Icon(
+                        isObscure ? Icons.visibility_off : Icons.visibility,
                         color: Colors.white,
                       ),
-                      labelText: 'Correo Electronico',
-                      errorText: errorTextForm,
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Correo Requerido';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.emailAddress,
+                    errorText: errorTextForm,
                   ),
-                  const Spacer(flex: 1),
-                  TextFormField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.lock,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Contraseña Requerida';
+                    }
+                    return null;
+                  },
+                  obscureText: isObscure,
+                  keyboardType: TextInputType.visiblePassword,
+                ),
+                const Spacer(flex: 1),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_keyForm.currentState!.validate()) {
+                      _keyForm.currentState!.save();
+                      _login();
+                    }
+                  },
+                  child: const Text('INICIAR SESIÓN'),
+                ),
+                const Spacer(flex: 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      '¿No tienes cuenta?',
+                      style: TextStyle(
                         color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                      labelText: '* * * * * * * *',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
-                        icon: Icon(
-                          isObscure ? Icons.visibility_off : Icons.visibility,
-                          color: Colors.white,
-                        ),
-                      ),
-                      errorText: errorTextForm,
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Contraseña Requerida';
-                      }
-                      return null;
-                    },
-                    obscureText: isObscure,
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                  const Spacer(flex: 1),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_keyForm.currentState!.validate()) {
-                        _keyForm.currentState!.save();
-                        _login();
-                      }
-                    },
-                    child: const Text('INICIAR SESIÓN'),
-                  ),
-                  const Spacer(flex: 2),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '¿No tienes cuenta?',
+                    TextButton(
+                      onPressed: () => context.go('/registrer'),
+                      child: const Text(
+                        'Registrate',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () => context.go('/registrer'),
-                        child: const Text(
-                          'Registrate',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

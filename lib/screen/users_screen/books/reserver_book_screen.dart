@@ -68,7 +68,6 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
       final reservarLibro =
           await Provider.of<BookProvider>(context, listen: false)
               .solicitarLibro(datosLibro);
-      print(reservarLibro);
 
       if (reservarLibro.isNotEmpty) {
         mensaje(context, '¡Libro Reservado Con Éxito!');
@@ -77,7 +76,7 @@ class _ReserverBookScreenState extends State<ReserverBookScreen> {
         mensaje(context, '¡Error Al Reservar El Libro!');
       }
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 

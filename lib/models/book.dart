@@ -91,7 +91,6 @@ class BookProvider extends ChangeNotifier {
       notifyListeners();
       return response;
     } catch (e) {
-      print(e);
       return [];
     }
   }
@@ -102,7 +101,6 @@ class BookProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return [];
     }
   }
@@ -114,7 +112,6 @@ class BookProvider extends ChangeNotifier {
       notifyListeners();
       return response;
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -125,7 +122,6 @@ class BookProvider extends ChangeNotifier {
 
       return response;
     } catch (e) {
-      print(e);
       return {};
     }
   }

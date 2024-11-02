@@ -26,13 +26,12 @@ class _LibrosPrestadosScreenState extends State<LibrosPrestadosScreen> {
         isLoaded = true;
       });
       final libros = await LibrarianServices().allLibrosPrestados();
-      print(libros);
       setState(() {
         solicitudes = libros;
         isLoaded = false;
       });
     } catch (e) {
-      print('Error: $e');
+      throw Exception('Error: $e');
     }
   }
 

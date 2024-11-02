@@ -1,15 +1,15 @@
 import 'package:biblioteca/services/user_services.dart';
-import 'package:biblioteca/widgets/drawer_bibliotecario.dart';
+import 'package:biblioteca/widgets/drawer_teacher.dart';
 import 'package:flutter/material.dart';
 
-class ViewAllUserScreen extends StatefulWidget {
-  const ViewAllUserScreen({super.key});
+class ViewStudens extends StatefulWidget {
+  const ViewStudens({super.key});
 
   @override
-  State<ViewAllUserScreen> createState() => _ViewAllUserScreenState();
+  State<ViewStudens> createState() => _ViewStudensScreenState();
 }
 
-class _ViewAllUserScreenState extends State<ViewAllUserScreen> {
+class _ViewStudensScreenState extends State<ViewStudens> {
   List<Map<String, dynamic>> usuarios = [];
   bool isLoaded = false;
 
@@ -24,7 +24,7 @@ class _ViewAllUserScreenState extends State<ViewAllUserScreen> {
       setState(() {
         isLoaded = true;
       });
-      final users = await UserServices().getUsers();
+      final users = await UserServices().getStudents();
       setState(() {
         usuarios = users;
         isLoaded = false;
@@ -38,9 +38,9 @@ class _ViewAllUserScreenState extends State<ViewAllUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todos los Usuarios'),
+        title: const Text('TODOS LOS ESTUDIANTES'),
       ),
-      drawer: drawerBibliotecario(context),
+      drawer: drawerTeacher(context),
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(10),
@@ -57,7 +57,7 @@ class _ViewAllUserScreenState extends State<ViewAllUserScreen> {
                     : usuarios.isEmpty
                         ? const Center(
                             child: Text(
-                              'NO HAY USUARIOS REGISTRADOS',
+                              'NO HAY ESTUDIANTES REGISTRADOS',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20,

@@ -24,19 +24,15 @@ class BooksServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         var decodedResponse = jsonDecode(response.body);
         for (var item in decodedResponse) {
           books.add(Book.fromJson(item));
         }
-        print('Estos son los libros');
-        print(books);
         return books;
       } else {
         return [];
       }
     } catch (e) {
-      print(e);
       return [];
     }
   }
@@ -52,7 +48,6 @@ class BooksServices {
         }).toList();
       }
     } catch (e) {
-      print(e);
       return [];
     }
   }
@@ -73,14 +68,11 @@ class BooksServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return json.decode(response.body);
       } else {
-        print(response.body);
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }
@@ -93,7 +85,6 @@ class BooksServices {
 
       final dataUser = await UserServices().obtenerDatosUsuario();
       final idUsuario = dataUser['id'];
-      print(idUsuario);
 
       final response = await http.get(
         Uri.parse('${urlApi}libroUsuarios/perfil/$idUsuario'),
@@ -107,16 +98,13 @@ class BooksServices {
         for (var item in decodedResponse) {
           libros.add(item);
         }
-        print(libros);
         return libros.where((libro) {
           return libro['estadoId']['descripcion'] != 'Inactivo';
         }).toList();
       } else {
-        print(response.body);
         return json.decode(response.body);
       }
     } catch (e) {
-      print(e);
       return {};
     }
   }

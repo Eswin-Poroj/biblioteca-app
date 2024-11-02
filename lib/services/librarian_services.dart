@@ -45,7 +45,6 @@ class LibrarianServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         var decodedResponse = jsonDecode(response.body);
         for (var item in decodedResponse) {
           books.add(item);
@@ -77,7 +76,6 @@ class LibrarianServices {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         var decodedResponse = jsonDecode(response.body);
         for (var item in decodedResponse) {
           books.add(item);
@@ -113,6 +111,37 @@ class LibrarianServices {
         return jsonDecode(response.body);
       } else {
         return jsonDecode(response.body);
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getMultas() async {
+    try {
+      const storage = FlutterSecureStorage();
+      String? token = await storage.read(key: 'token');
+      List<Map<String, dynamic>> multas = [];
+
+      final response = await http.get(
+        Uri.parse('${urlApi}multas'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        for (var item in decodedResponse) {
+          multas.add(item);
+        }
+        return multas;
+      } else {
+        var decodedResponse = jsonDecode(response.body);
+        for (var item in decodedResponse) {
+          multas.add(item);
+        }
+        return multas;
       }
     } catch (e) {
       throw Exception('Error: $e');

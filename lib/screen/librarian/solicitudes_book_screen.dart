@@ -26,7 +26,6 @@ class _SolicitudesBookScreenState extends State<SolicitudesBookScreen> {
         isLoaded = true;
       });
       final libros = await LibrarianServices().allSolicitesLibros();
-      print(libros);
       setState(() {
         solicitudes = libros.where((libro) {
           return libro['estadoId']['id'] != 2;
@@ -35,7 +34,7 @@ class _SolicitudesBookScreenState extends State<SolicitudesBookScreen> {
         isLoaded = false;
       });
     } catch (e) {
-      print('Error: $e');
+      throw Exception('Error: $e');
     }
   }
 
@@ -243,7 +242,7 @@ class _SolicitudesBookScreenState extends State<SolicitudesBookScreen> {
       await LibrarianServices().aprobarSolicitudLibros(idBook, estadoSolicitud);
       getSolicitudes();
     } catch (e) {
-      print('Error: $e');
+      throw Exception('Error: $e');
     }
   }
 }

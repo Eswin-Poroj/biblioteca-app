@@ -40,7 +40,6 @@ class _UpdateUserState extends State<UpdateUser> {
       'rol': 3, // 3 es el rol de Estudiante
       'usuario': widget.user.id,
     };
-    print(user);
 
     final userServices = Provider.of<UserProvider>(context, listen: false);
 
@@ -52,12 +51,10 @@ class _UpdateUserState extends State<UpdateUser> {
     if (response2['success'] == false) {
       mensaje(context, '${response2['message']}');
     } else {
-      print(response2);
       mensaje(context, '¡Gracias por Registrarte, Actualiza Tus Datos!');
       final response =
           await context.read<UserProvider>().updateUserProvider(user);
 
-      print(response);
       if (response['perfil']['id'] != null) {
         mensaje(context, '¡Datos Actualizados Correctamente!');
         context.go('/home-screen');
